@@ -1,0 +1,917 @@
+#include<fstream.h> 
+
+#include<conio.h> 
+
+#include<string.h> 
+
+#include<stdio.h> 
+
+const o=6; 
+
+int pos[10][10]; 
+
+class vehicle 
+
+{ 
+
+char plate[o]; 
+
+int row; 
+
+int col; 
+
+float fare; 
+
+char type; 
+
+char date[10]; 
+
+char time[5]; 
+
+float duration; 
+
+int type1; 
+
+public: 
+
+int returnloc() 
+
+{ 
+
+int loc; 
+
+loc=(row-1)*100+(col-1); 
+
+return loc; 
+
+} 
+
+void getdata() 
+
+{ 
+
+int i=0,j=0,flag=0,k=0,g=1; 
+
+cout<<"Enter char number plate(last six characters)\n"; 
+
+gets(plate); 
+
+cout<<"Enter desired position(row then column)\n"; 
+
+for(i=0;i<10;i++) 
+
+{ 
+
+cout<<endl; 
+
+for(j=0;j<10;j++) 
+
+{ 
+
+if(pos[i][j]==1) 
+
+cout<<"[*]"; 
+
+else 
+
+cout<<"[ ]"; 
+
+} 
+
+} 
+
+for(flag=0;flag<1;k++) 
+
+{ 
+
+cout<<endl; 
+
+cin>>row; 
+
+cin>>col; 
+
+if(pos[row-1][col-1]!=1 && row<=10 && col<=10) 
+
+{ 
+
+cout<<"Your position is available,please park your car there!"<<endl; 
+
+pos[row-1][col-1]=1; 
+
+flag=1; 
+
+} 
+
+else 
+
+cout<<"try again"; 
+
+} 
+
+cout<<endl<<"Enter Vehicle Type(C=CAR,T=TRUCK,S=SCOOTER/SCOOTIE,B=BIKE)\n"; 
+
+do 
+
+{ 
+
+type=getche(); 
+
+cout<<endl; 
+
+switch(type) 
+
+{ 
+
+case'C':type1=0;g=0;break; 
+
+case'c':type1=0;g=0;break; 
+
+ 
+
+case'b':type1=1;g=0;break; 
+
+case'B':type1=1;g=0;break; 
+
+ 
+
+case'T':type1=2;g=0;break; 
+
+case't':type1=2;g=0;break; 
+
+ 
+
+case'S':type1=3;g=0;break; 
+
+case's':type1=3;g=0;break; 
+
+ 
+
+default:cout<<"\nWrong option try again\n"<<endl; 
+
+} 
+
+}while(g!=0); 
+
+cout<<"Enter Date (dd mm yyyy)\n"; 
+
+gets(date); 
+
+cout<<"Enter Time of Entry (hh mm)\n"; 
+
+gets(time); 
+
+cout<<"Enter Duration(in minutes)\n"; 
+
+cin>>duration; 
+
+} 
+
+void showdata() 
+
+{ 
+
+int i=0; 
+
+cout<<"\n\n Number plate :"<<plate<<endl; 
+
+cout<<"Position of Car : "<<"row:"<<row<<" column:"<<col<<endl; 
+
+cout<<"\nTime of Entry: "; 
+
+cout<<time; 
+
+cout<<"\nDate of entry: "<<date; 
+
+if(duration<60)fare=20;else fare=(duration/60)*20; 
+
+cout<<endl<<"Fare(RS 20 PER HOUR)= RS"<<fare; 
+
+} 
+
+int check1(int r,int c); 
+
+int check2(char p[]); 
+
+int check3(char d[]); 
+
+int check4(int l); 
+
+void edit(); 
+
+}; 
+
+int vehicle::check1(int r,int c) 
+
+{ 
+
+if(r==row && c==col) 
+
+return 1; 
+
+else 
+
+return 0; 
+
+} 
+
+int vehicle::check2(char p[]) 
+
+{ 
+
+if(strcmp(p,plate)==0) 
+
+return 1; 
+
+else 
+
+return 0; 
+
+} 
+
+int vehicle::check3(char d[]) 
+
+{ 
+
+if(strcmp(d,date)==0) 
+
+return 1; 
+
+else 
+
+return 0; 
+
+} 
+
+int vehicle::check4(int l) 
+
+{ 
+
+if(l==type1) 
+
+return 1; 
+
+else 
+
+return 0; 
+
+} 
+
+void vehicle::edit() 
+
+{ 
+
+char ch; 
+
+int flag=0,k=0,g=0; 
+
+do{ 
+
+cout<<"\nDetail of the record :\n"; 
+
+showdata(); 
+
+cout<<"\n\nPress A if you want to change Number Plate\n"; 
+
+cout<<"\n\nPress B if you want to change Position\n"; 
+
+cout<<"\n\nPress C if you want to change Type of vehicle\n"; 
+
+cout<<"\n\nPress D if you want no more change\n"; 
+
+cout<<"Enter your option:"; 
+
+ch=getche(); 
+
+switch(ch) 
+
+{ 
+
+case'A': 
+
+case'a':cout<<"\nEnter new number plate(last six characters)\n"; 
+
+gets(plate); 
+
+break; 
+
+ 
+
+case'B': 
+
+case'b':cout<<"\nEnter new desired position(row then column)\n"; 
+
+pos[row-1][col-1]=0; 
+
+for(flag=0;flag<1;k++) 
+
+{ 
+
+cout<<endl; 
+
+cin>>row; 
+
+cin>>col; 
+
+if(pos[row-1][col-1]!=1 && row<=10 && col<=10) 
+
+{ 
+
+cout<<"Your position is available,please park your car there!"<<endl; 
+
+pos[row-1][col-1]=1; 
+
+flag=1; 
+
+} 
+
+else 
+
+cout<<"try again"; 
+
+} 
+
+break; 
+
+ 
+
+case'C': 
+
+case'c':cout<<"\nEnter new type of vehicle(C=CAR,T=TRUCK,S=SCOOTER/SCOOTIE,B=BIKE)\n"; 
+
+do 
+
+{ 
+
+cin>>type; 
+
+switch(type) 
+
+{ 
+
+case'C':g=0;break; 
+
+case'c':g=0;break; 
+
+ 
+
+case'b':g=0;break; 
+
+case'B':g=0;break; 
+
+ 
+
+case'T':g=0;break; 
+
+case't':g=0;break; 
+
+ 
+
+case'S':g=0;break; 
+
+case's':g=0;break; 
+
+ 
+
+default:cout<<"\nWrong option try again\n"<<endl;g=1; 
+
+} 
+
+}while(g!=0); 
+
+break; 
+
+ 
+
+case'D': 
+
+case'd':break; 
+
+ 
+
+default:cout<<"\nWrong Option!!Try Again!!"; 
+
+} 
+
+}while(ch!='D' && ch!='d'); 
+
+} 
+
+void append() 
+
+{ 
+
+vehicle v; 
+
+cout<<"\nEnter details of the record: \n"; 
+
+v.getdata(); 
+
+ofstream f1; 
+
+f1.open("PARKING1.DAT",ios::binary|ios::app); 
+
+f1.write((char*)&v, sizeof(v)); 
+
+f1.close(); 
+
+} 
+
+void displayall() 
+
+{ 
+
+vehicle v; 
+
+ifstream f1; 
+
+f1.open("PARKING1.DAT",ios::binary|ios::in); 
+
+while(f1.read((char*)&v, sizeof(v))) 
+
+{ 
+
+v.showdata(); 
+
+f1.close(); 
+
+} 
+
+} 
+
+void search1() 
+
+{ 
+
+int a,b,found=0; 
+
+vehicle v; 
+
+cout<<"Enter row number : "; 
+
+cin>>a; 
+
+cout<<"Enter column number : "; 
+
+cin>>b; 
+
+ifstream f; 
+
+f.open("PARKING1.DAT",ios::binary); 
+
+while(f.read((char*)&v, sizeof(v))) 
+
+{ 
+
+if(v.check1(a,b)==1) 
+
+{ 
+
+found++; 
+
+v.showdata(); 
+
+} 
+
+} 
+
+f.close(); 
+
+if(found==0) 
+
+cout<<"\n\nNO MATCH FOUND !!\n\n"; 
+
+else 
+
+cout<<"\n\nTotal"<<found<<"RECORD(S) FOUND!!\n\n"; 
+
+} 
+
+void search2() 
+
+{ 
+
+int found=0; 
+
+char g[o]; 
+
+vehicle v; 
+
+cout<<"Enter Number plate to search"; 
+
+gets(g); 
+
+ifstream f; 
+
+f.open("PARKING1.DAT",ios::binary); 
+
+while(f.read((char*)&v, sizeof(v))) 
+
+{ 
+
+if(v.check2(g)==1) 
+
+{ 
+
+found++; 
+
+v.showdata(); 
+
+} 
+
+} 
+
+f.close(); 
+
+if(found==0) 
+
+cout<<"\n\nNO MATCH FOUND !!\n\n"; 
+
+else 
+
+cout<<"\n\nTotal"<<found<<"RECORD(S) FOUND!!\n\n"; 
+
+} 
+
+void search3() 
+
+{ 
+
+int found=0; 
+
+char e[10]; 
+
+vehicle v; 
+
+cout<<"Enter Date of Entry"; 
+
+ifstream f; 
+
+f.open("PARKING1.DAT",ios::binary); 
+
+while(f.read((char*)&v, sizeof(v))) 
+
+{ 
+
+if(v.check3(e)==1) 
+
+{ 
+
+found++; 
+
+v.showdata(); 
+
+} 
+
+} 
+
+f.close(); 
+
+if(found==0) 
+
+cout<<"\n\nNO MATCH FOUND !!\n\n"; 
+
+else 
+
+cout<<"\n\nTotal"<<found<<"RECORD(S) FOUND!!\n\n"; 
+
+} 
+
+void search4() 
+
+{ 
+
+int found=0,r,g=1; 
+
+char s; 
+
+vehicle v; 
+
+cout<<endl<<"Enter Vehicle Type(C=CAR,T=TRUCK,S=SCOOTER/SCOOTIE,B=BIKE)\n"; 
+
+cin>>s; 
+
+do 
+
+{ 
+
+cout<<endl; 
+
+switch(s) 
+
+{ 
+
+case'C':r=0;g=0;break; 
+
+case'c':r=0;g=0;break; 
+
+ 
+
+case'b':r=1;g=0;break; 
+
+case'B':r=1;g=0;break; 
+
+ 
+
+case'T':r=2;g=0;break; 
+
+case't':r=2;g=0;break; 
+
+ 
+
+case'S':r=3;g=0;break; 
+
+case's':r=3;g=0;break; 
+
+ 
+
+default:cout<<"\nWrong option try again\n"<<endl; 
+
+} 
+
+}while(g!=0); 
+
+ifstream f; 
+
+f.open("PARKING1.DAT",ios::binary); 
+
+while(f.read((char*)&v, sizeof(v))) 
+
+{ 
+
+if(v.check4(r)==1) 
+
+{ 
+
+found++; 
+
+v.showdata(); 
+
+} 
+
+} 
+
+f.close(); 
+
+if(found==0) 
+
+cout<<"\n\nNO MATCH FOUND !!\n\n"; 
+
+else 
+
+cout<<"\n\nTotal"<<found<<"RECORD(S) FOUND!!\n\n"; 
+
+} 
+
+void modify() 
+
+{ 
+
+char sn[50]; 
+
+vehicle v; 
+
+int modified=0; 
+
+cout<<"\nEnter number plate to be modified"; 
+
+gets(sn); 
+
+fstream f1,f2; 
+
+f1.open("PARKING1.DAT",ios::binary|ios::in); 
+
+f2.open("TEMP.DAT",ios::binary|ios::out); 
+
+while(f1.read((char*)&v,sizeof(v))) 
+
+{ 
+
+if(v.check2(sn)==1) 
+
+{ 
+
+modified++; 
+
+v.edit(); 
+
+} 
+
+f2.write((char*)&v,sizeof(v)); 
+
+} 
+
+f1.close(); 
+
+f2.close(); 
+
+if(modified==0) 
+
+cout<<"\n\nNO MATCH FOUND!!\n\n"; 
+
+else 
+
+{ 
+
+remove("PARKING1.DAT"); 
+
+rename("TEMP.DAT","PARKING1.DAT"); 
+
+} 
+
+} 
+
+void Delete() 
+
+{ 
+
+char sn[50]; 
+
+vehicle v; 
+
+int deleted=0,r,c; 
+
+cout<<"\nEnter number plate to be deleted "; 
+
+gets(sn); 
+
+fstream f1,f2; 
+
+f1.open("PARKING1.DAT",ios::binary|ios::in); 
+
+f2.open("TEMP.DAT",ios::binary|ios::out); 
+
+while(f1.read((char*)&v,sizeof(v))) 
+
+{ 
+
+if(v.check2(sn)==1) 
+
+{ 
+
+deleted++; 
+
+   c=v.returnloc()%100; 
+
+r=v.returnloc()/100; 
+
+pos[r][c]=0; 
+
+} 
+
+else 
+
+f2.write((char*)&v,sizeof(v)); 
+
+} 
+
+f1.close(); 
+
+f2.close(); 
+
+cout<<deleted<<" Vehicles exited"; 
+
+if(deleted==0) 
+
+cout<<"\n\nNO MATCH FOUND!!\n\n"; 
+
+else 
+
+{ 
+
+remove("PARKING1.DAT"); 
+
+rename("TEMP.DAT","PARKING1.DAT"); 
+
+} 
+
+} 
+
+void main() 
+
+{ 
+
+int i,j; 
+
+for(i=0;i<10;i++) 
+
+{ 
+
+for(j=0;j<10;j++) 
+
+{ 
+
+pos[i][j]=0; 
+
+} 
+
+} 
+
+int r,c; 
+
+vehicle v; 
+
+ifstream f1("PARKING1.DAT",ios::binary); 
+
+while(f1.read((char*)&v,sizeof(v))) 
+
+{ 
+
+c=v.returnloc()%100; 
+
+r=v.returnloc()/100; 
+
+pos[r][c]=1; 
+
+} 
+
+char choice,a='3'; 
+
+do{ 
+
+cout<<"MENU\n"; 
+
+cout<<"Press 1 for A NEW VEHICLE IN THE PARKING LOT\n"; 
+
+cout<<"Press 2 for DISPLAY ALL RECORDS OF VEHICLES IN LOT\n"; 
+
+cout<<"Press 3 for SEARCH BY NUMBER PLATE OF VEHICLE\n"; 
+
+cout<<"Press 4 for SEARCH BY DATE OF ENTRY\n"; 
+
+cout<<"Press 5 for SEARCH BY TYPE OF VEHICLE\n"; 
+
+cout<<"Press 6 for SEARCH BY POSITION OF VEHICLE\n"; 
+
+cout<<"Press 7 for MODIFY THE RECORD OF A PREVIOUSLY ENTERED VEHICLE\n"; 
+
+cout<<"Press 8 for EXITING THE PARKING LOT\n"; 
+
+cout<<"Press 9 for QUIT\n"; 
+
+cout<<"ENTER YOUR CHOICE : "; 
+
+choice=getche(); 
+
+switch(choice) 
+
+{ 
+
+case '1':append();break; 
+
+case '2':displayall();break; 
+
+case '3':search2();break; 
+
+case '4':search3();break; 
+
+case '5':search4();break; 
+
+case '6':search1();break; 
+
+case '7':modify();break; 
+
+case '8':Delete();break; 
+
+case '9':break; 
+
+default:cout<<"\nWRONG CHOICE PLEASE TRY AGAIN!!\n\n"; 
+
+} 
+
+char clr; 
+
+cout<<"\n\nClear screen(n=no,any other key=yes)"; 
+
+clr=getche(); 
+
+if(clr!='N'&&clr!='n') 
+
+clrscr(); 
+
+}while(choice!='9'); 
+
+} 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
